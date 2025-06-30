@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_todolist/signup.dart';
-import 'package:project_todolist/forgotpassword.dart'; 
+import 'package:project_todolist_mobile/signup.dart';
+import 'package:project_todolist_mobile/forgotpassword.dart '; 
 
 class Login extends StatefulWidget {
   const Login({super.key});
