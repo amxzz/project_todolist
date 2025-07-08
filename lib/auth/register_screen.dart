@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:project_thrive/auth/auth_service.dart';
+
 class RegisterScreen extends StatefulWidget {
   final VoidCallback onLoginTap;
   const RegisterScreen({Key? key, required this.onLoginTap}) : super(key: key);
@@ -17,6 +19,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscureConfirm = true;
   bool _loading = false;
   String? _error;
+ final AuthService _authService = AuthService();
+
+  void _register() async {
+    if (_passwordController.text != _confirmController.text) {
+      setState(() {
+        _error = 'Passwords do not match';
+      });
+      return;
+    }
+
+    setState(() {
+      _loading = true;
+      _error = null;
+    });
+
+    try {
+      final response = await _authService.signUp(
+        _emailController.text,
+        _passwordController.text,
+      );
+      if (response.user != null) {
+        if (mounted) {
+          showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: const Text('Registration Successful'),
+              content: const Text('Your account has been created. Please log in.'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    widget.onLoginTap();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      } else {
+        if (mounted) {
+          setState(() {
+            _error = 'Registration failed: An unknown error occurred.';
+          });
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _error = 'An error occurred: $e';
+        });
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
+    }
+  }
 
   @override
   void dispose() {
@@ -149,8 +211,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      onPressed:
-                          _loading ? null : () {}, // TODO: Add register logic
+                      onPressed: _loading ? null : _register,
                       child:
                           _loading
                               ? const CircularProgressIndicator(

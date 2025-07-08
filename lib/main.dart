@@ -242,29 +242,28 @@ class _AuthGateState extends State<AuthGate> {
         ),
         appBar: _buildAppBar(),
         body: _buildBody(),
-        floatingActionButton:
-            isToday || isUpcoming || isHabitTracker
+        floatingActionButton: isToday || isUpcoming || isHabitTracker
+            ? FloatingActionButton(
+                onPressed: () {
+                  if (isToday) {
+                    _todayTaskKey.currentState?.showAddTaskDialog();
+                  } else if (isUpcoming) {
+                    _upcomingTaskKey.currentState?.showAddTaskDialog();
+                  } else if (isHabitTracker) {
+                    _habitTrackerKey.currentState?.showAddHabitDialog();
+                  }
+                },
+                child: const Icon(Icons.add),
+                tooltip: 'Tambah',
+              )
+            : (isDashboard
                 ? FloatingActionButton(
-                  onPressed: () {
-                    if (isToday) {
-                      _todayTaskKey.currentState?.showAddTaskDialog();
-                    } else if (isUpcoming) {
-                      _upcomingTaskKey.currentState?.showAddTaskDialog();
-                    } else if (isHabitTracker) {
-                      _habitTrackerKey.currentState?.showAddHabitDialog();
-                    }
-                  },
-                  child: const Icon(Icons.add),
-                  tooltip: 'Tambah',
-                )
-                : (isDashboard
-                    ? FloatingActionButton(
-                      onPressed:
-                          () => _dashboardKey.currentState?.showAddTaskDialog(),
-                      child: const Icon(Icons.add),
-                      tooltip: 'Tambah Tugas',
-                    )
-                    : null),
+                    onPressed: () =>
+                        _dashboardKey.currentState?.showAddTaskDialog(),
+                    child: const Icon(Icons.add),
+                    tooltip: 'Tambah Tugas',
+                  )
+                : null),
       );
     }
     if (_showLogin) {
@@ -321,10 +320,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Dashboard',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -333,10 +331,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -348,11 +345,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
         actions: [
           IconButton(
@@ -371,10 +367,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Hari Ini',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -382,10 +377,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -397,11 +391,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       );
     } else if (isUpcoming) {
@@ -413,10 +406,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Mendatang',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -424,10 +416,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -439,11 +430,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       );
     } else if (isDone) {
@@ -455,10 +445,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Selesai',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -466,10 +455,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -481,11 +469,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       );
     } else if (isJournal) {
@@ -497,10 +484,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Journal',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -508,10 +494,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -523,11 +508,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       );
     } else if (isHabitTracker) {
@@ -539,10 +523,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Habit Tracker',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -550,10 +533,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -565,11 +547,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       );
     } else if (isFilterLabel) {
@@ -581,10 +562,9 @@ class _AuthGateState extends State<AuthGate> {
                 text: 'Filter & Label',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? const Color(0xFF00F5A0)
-                          : const Color(0xFF0A3576),
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? const Color(0xFF00F5A0)
+                      : const Color(0xFF0A3576),
                 ),
               ),
               TextSpan(
@@ -592,10 +572,9 @@ class _AuthGateState extends State<AuthGate> {
                 style: TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,
-                  color:
-                      Theme.of(context).brightness == Brightness.dark
-                          ? Colors.white70
-                          : Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white70
+                      : Colors.black54,
                 ),
               ),
             ],
@@ -607,11 +586,10 @@ class _AuthGateState extends State<AuthGate> {
         iconTheme: Theme.of(context).iconTheme,
         toolbarHeight: 72,
         leading: Builder(
-          builder:
-              (context) => IconButton(
-                icon: const Icon(Icons.menu),
-                onPressed: () => Scaffold.of(context).openDrawer(),
-              ),
+          builder: (context) => IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: () => Scaffold.of(context).openDrawer(),
+          ),
         ),
       );
     }
