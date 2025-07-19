@@ -9,8 +9,8 @@ class JournalService {
     if (userId == null) return [];
     final response = await _client
         .from(table)
-        .select()
-        .eq('user_id', userId)
+        .select() 
+        .eq('user_id', userId) 
         .order('entry_date', ascending: false);
     if (response is List) {
       return List<Map<String, dynamic>>.from(response);
