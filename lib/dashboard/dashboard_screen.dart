@@ -219,7 +219,9 @@ class DashboardScreenState extends State<DashboardScreen> {
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
-                        ).apply(color: Theme.of(context).textTheme.bodyLarge?.color),
+                        ).apply(
+                          color: Theme.of(context).textTheme.bodyLarge?.color,
+                        ),
                       ),
                       const SizedBox(height: 12),
                       if (upcomingTasks.isEmpty)
@@ -228,7 +230,12 @@ class DashboardScreenState extends State<DashboardScreen> {
                             padding: const EdgeInsets.all(16.0),
                             child: Text(
                               'Tidak ada tugas mendatang.',
-                              style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color),
+                              style: TextStyle(
+                                color:
+                                    Theme.of(
+                                      context,
+                                    ).textTheme.bodyMedium?.color,
+                              ),
                             ),
                           ),
                         )
@@ -247,7 +254,6 @@ class DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
           ),
-          
         );
   }
 
