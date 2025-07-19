@@ -45,6 +45,9 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
       _selectedTime = TimeOfDay.fromDateTime(widget.initialTask!.dueDate!);
     } else {
       _selectedDate = DateTime.now();
+      // Don't initialize time here - let user select it explicitly
+      // Set time to 00:00 as default to avoid null issues
+      _selectedTime = const TimeOfDay(hour: 0, minute: 0);
     }
     // Optionally set _priority and _label if Task has those fields in the future
   }
@@ -60,7 +63,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
     final now = DateTime.now();
     final picked = await showDatePicker(
       context: context,
-      initialDate: now,
+      initialDate: _selectedDate ?? now,
       firstDate: now,
       lastDate: DateTime(now.year + 5),
     );
@@ -70,7 +73,7 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
   Future<void> _pickTime() async {
     final picked = await showTimePicker(
       context: context,
-      initialTime: TimeOfDay.now(),
+      initialTime: _selectedTime ?? TimeOfDay.now(),
     );
     if (picked != null) setState(() => _selectedTime = picked);
   }
@@ -207,20 +210,36 @@ class _AddTaskDialogState extends State<AddTaskDialog> {
                                 : () {
                                   if (_formKey.currentState!.validate()) {
                                     setState(() => _loading = true);
+                                    // Combine date and time before passing to callback
+                                    DateTime? combinedDate;
+                                    if (_selectedDate != null && _selectedTime != null) {
+                                      combinedDate = DateTime(
+                                        _selectedDate!.year,
+                                        _selectedDate!.month,
+                                        _selectedDate!.day,
+                                        _selectedTime!.hour,
+                                        _selectedTime!.minute,
+                                      );
+                                    } else if (_selectedDate != null) {
+                                      combinedDate = DateTime(
+                                        _selectedDate!.year,
+                                        _selectedDate!.month,
+                                        _selectedDate!.day,
+                                      );
+                                    }
+                                    
                                     widget.onAdd({
                                       'title': _titleController.text.trim(),
-                                      'description':
-                                          _descController.text.trim(),
+                                      'description': _descController.text.trim(),
                                       'date': _selectedDate,
                                       'time': _selectedTime,
+                                      'combinedDateTime': combinedDate,
                                       'priority': _priority,
                                       'label': _label,
                                       'id': widget.initialTask?.id,
                                       'userId': widget.initialTask?.userId,
-                                      'createdAt':
-                                          widget.initialTask?.createdAt,
-                                      'completed':
-                                          widget.initialTask?.completed,
+                                      'createdAt': widget.initialTask?.createdAt,
+                                      'completed': widget.initialTask?.completed,
                                     });
                                     setState(() => _loading = false);
                                   }

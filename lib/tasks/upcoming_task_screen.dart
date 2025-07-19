@@ -59,11 +59,11 @@ class UpcomingTaskScreenState extends State<UpcomingTaskScreen> {
           final dueDate =
               taskData['date'] != null && taskData['time'] != null
                   ? DateTime(
-                      taskData['date'].year,
-                      taskData['date'].month,
-                      taskData['date'].day,
-                      taskData['time'].hour,
-                      taskData['time'].minute,
+                      (taskData['date'] as DateTime).year,
+                      (taskData['date'] as DateTime).month,
+                      (taskData['date'] as DateTime).day,
+                      (taskData['time'] as TimeOfDay).hour,
+                      (taskData['time'] as TimeOfDay).minute,
                     )
                   : null;
 
@@ -96,11 +96,11 @@ class UpcomingTaskScreenState extends State<UpcomingTaskScreen> {
           final dueDate =
               taskData['date'] != null && taskData['time'] != null
                   ? DateTime(
-                      taskData['date'].year,
-                      taskData['date'].month,
-                      taskData['date'].day,
-                      taskData['time'].hour,
-                      taskData['time'].minute,
+                      (taskData['date'] as DateTime).year,
+                      (taskData['date'] as DateTime).month,
+                      (taskData['date'] as DateTime).day,
+                      (taskData['time'] as TimeOfDay).hour,
+                      (taskData['time'] as TimeOfDay).minute,
                     )
                   : task.dueDate;
           final updatedTask = task.copyWith(
@@ -242,7 +242,7 @@ class _TaskListItem extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
     String subtitle = '';
     if (task.dueDate != null) {
-      subtitle = DateFormat('EEEE, d MMM').format(task.dueDate!);
+      subtitle = DateFormat('EEEE, d MMM, HH:mm').format(task.dueDate!);
     }
     if (task.description != null && task.description!.isNotEmpty) {
       subtitle += (subtitle.isEmpty ? '' : ' • ') + task.description!;

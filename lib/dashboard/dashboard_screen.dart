@@ -50,18 +50,8 @@ class DashboardScreenState extends State<DashboardScreen> {
               final userId = _taskService.client.auth.currentUser?.id;
               if (userId == null) return;
 
-              DateTime? dueDate;
-              if (taskData['date'] != null && taskData['time'] != null) {
-                final date = taskData['date'] as DateTime;
-                final time = taskData['time'] as TimeOfDay;
-                dueDate = DateTime(
-                  date.year,
-                  date.month,
-                  date.day,
-                  time.hour,
-                  time.minute,
-                );
-              }
+              // Use the pre-combined datetime
+              DateTime? dueDate = taskData['combinedDateTime'] as DateTime?;
 
               final newTask = Task(
                 id: '', // Let Supabase generate it
@@ -101,27 +91,15 @@ class DashboardScreenState extends State<DashboardScreen> {
             initialTask: task,
             onCancel: () => Navigator.of(dContext).pop(),
             onAdd: (taskData) async {
-              DateTime? dueDate;
-              if (taskData['date'] != null && taskData['time'] != null) {
-                final date = taskData['date'] as DateTime;
-                final time = taskData['time'] as TimeOfDay;
-                dueDate = DateTime(
-                  date.year,
-                  date.month,
-                  date.day,
-                  time.hour,
-                  time.minute,
-                );
-              } else {
-                dueDate = task.dueDate;
-              }
+              // Use the pre-combined datetime
+              DateTime? dueDate = taskData['combinedDateTime'] as DateTime?;
 
               final updatedTask = Task(
                 id: task.id,
                 userId: task.userId,
                 title: taskData['title'],
                 description: taskData['description'],
-                dueDate: dueDate,
+                dueDate: dueDate ?? task.dueDate,
                 completed: task.completed,
                 createdAt: task.createdAt,
                 updatedAt: DateTime.now(),
@@ -269,6 +247,7 @@ class DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
           ),
+          
         );
   }
 
@@ -384,7 +363,7 @@ class _UpcomingTaskItem extends StatelessWidget {
     final isDark = theme.brightness == Brightness.dark;
     String subtitle = '';
     if (task.dueDate != null) {
-      subtitle = DateFormat('d MMM, HH:mm').format(task.dueDate!);
+      subtitle = DateFormat('EEEE, d MMM, HH:mm').format(task.dueDate!);
     }
     if (task.description != null && task.description!.isNotEmpty) {
       subtitle += (subtitle.isEmpty ? '' : ' - ') + task.description!;

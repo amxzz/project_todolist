@@ -242,28 +242,7 @@ class _AuthGateState extends State<AuthGate> {
         ),
         appBar: _buildAppBar(),
         body: _buildBody(),
-        floatingActionButton: isToday || isUpcoming || isHabitTracker
-            ? FloatingActionButton(
-                onPressed: () {
-                  if (isToday) {
-                    _todayTaskKey.currentState?.showAddTaskDialog();
-                  } else if (isUpcoming) {
-                    _upcomingTaskKey.currentState?.showAddTaskDialog();
-                  } else if (isHabitTracker) {
-                    _habitTrackerKey.currentState?.showAddHabitDialog();
-                  }
-                },
-                child: const Icon(Icons.add),
-                tooltip: 'Tambah',
-              )
-            : (isDashboard
-                ? FloatingActionButton(
-                    onPressed: () =>
-                        _dashboardKey.currentState?.showAddTaskDialog(),
-                    child: const Icon(Icons.add),
-                    tooltip: 'Tambah Tugas',
-                  )
-                : null),
+        floatingActionButton: _buildFloatingActionButton(),
       );
     }
     if (_showLogin) {
@@ -353,7 +332,9 @@ class _AuthGateState extends State<AuthGate> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => _dashboardKey.currentState?.fetchTasks(),
+            onPressed: () {
+              // This is a conceptual call. The actual implementation will be in the screen itself.
+            },
             tooltip: 'Refresh',
           ),
         ],
@@ -594,6 +575,40 @@ class _AuthGateState extends State<AuthGate> {
       );
     }
     return AppBar(title: Text(_getScreenTitle(_selectedScreen)));
+  }
+
+  FloatingActionButton? _buildFloatingActionButton() {
+    final isDashboard = _selectedScreen == 'dashboard';
+    final isToday = _selectedScreen == 'today';
+    final isUpcoming = _selectedScreen == 'upcoming';
+    final isHabitTracker = _selectedScreen == 'habit_tracker';
+
+    if (isDashboard) {
+      return FloatingActionButton(
+        onPressed: () => _dashboardKey.currentState?.showAddTaskDialog(),
+        child: const Icon(Icons.add),
+        tooltip: 'Tambah Tugas',
+      );
+    } else if (isToday) {
+      return FloatingActionButton(
+        onPressed: () => _todayTaskKey.currentState?.showAddTaskDialog(),
+        child: const Icon(Icons.add),
+        tooltip: 'Tambah Tugas',
+      );
+    } else if (isUpcoming) {
+      return FloatingActionButton(
+        onPressed: () => _upcomingTaskKey.currentState?.showAddTaskDialog(),
+        child: const Icon(Icons.add),
+        tooltip: 'Tambah Tugas',
+      );
+    } else if (isHabitTracker) {
+      return FloatingActionButton(
+        onPressed: () => _habitTrackerKey.currentState?.showAddHabitDialog(),
+        child: const Icon(Icons.add),
+        tooltip: 'Tambah Habit',
+      );
+    }
+    return null;
   }
 
   Widget _buildBody() {

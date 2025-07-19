@@ -29,23 +29,31 @@ class TaskService {
   }
 
   Future<bool> updateTask(Task task) async {
-    final response = await _client
-        .from(table)
-        .update(task.toMap())
-        .eq('id', task.id)
-        .eq('user_id', task.userId);
-    return response != null;
+    try {
+      await _client
+          .from(table)
+          .update(task.toMap())
+          .eq('id', task.id)
+          .eq('user_id', task.userId);
+      return true;
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error updating task: $e');
+      return false;
+    }
   }
 
   Future<bool> deleteTask(String id) async {
     final userId = _client.auth.currentUser?.id;
     if (userId == null) return false;
-    final response = await _client
-        .from(table)
-        .delete()
-        .eq('id', id)
-        .eq('user_id', userId);
-    return response != null;
+    try {
+      await _client.from(table).delete().eq('id', id).eq('user_id', userId);
+      return true;
+    } catch (e) {
+      // ignore: avoid_print
+      print('Error deleting task: $e');
+      return false;
+    }
   }
 
   SupabaseClient get client => _client;
