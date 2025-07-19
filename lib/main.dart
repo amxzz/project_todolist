@@ -191,7 +191,7 @@ class _AuthGateState extends State<AuthGate> {
       _showLogin = false;
       _showRegister = false;
       _showForgot = true;
-    });
+    }); 
   }
 
   @override
