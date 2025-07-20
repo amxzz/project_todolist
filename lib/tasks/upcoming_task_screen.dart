@@ -14,7 +14,7 @@ class UpcomingTaskScreen extends StatefulWidget {
 
 class UpcomingTaskScreenState extends State<UpcomingTaskScreen> {
   final TaskService _taskService = TaskService();
-  late Future<List<Task>> _tasksFuture;
+  late Future<List<Task>> _tasksFuture; 
 
   @override
   void initState() {
