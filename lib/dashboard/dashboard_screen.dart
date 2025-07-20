@@ -123,7 +123,7 @@ class DashboardScreenState extends State<DashboardScreen> {
       dueDate: task.dueDate,
       completed: !task.completed,
       createdAt: task.createdAt,
-      updatedAt: DateTime.now(),
+      updatedAt: DateTime.now(), 
     );
     final success = await _taskService.updateTask(updatedTask);
     if (success) {
@@ -131,7 +131,9 @@ class DashboardScreenState extends State<DashboardScreen> {
     } else {
       // Handle error
     }
-  }
+  } 
+  
+
 
   @override
   Widget build(BuildContext context) {
