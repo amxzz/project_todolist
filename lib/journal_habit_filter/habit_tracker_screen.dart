@@ -21,7 +21,7 @@ class HabitTrackerScreenState extends State<HabitTrackerScreen> {
   }
 
   DateTime get _weekEnd => _weekStart.add(const Duration(days: 6));
-
+   
   @override
   void initState() {
     super.initState();
