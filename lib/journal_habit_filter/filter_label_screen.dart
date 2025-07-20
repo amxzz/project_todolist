@@ -31,9 +31,9 @@ class FilterLabelScreenState extends State<FilterLabelScreen> {
     super.initState();
     _fetchLabels();
   }
-
+       
   Future<void> _fetchLabels() async {
-    setState(() => _loading = true);
+    setState(() => _loading = true); 
     try {
       final labels = await _service.fetchLabels();
       if (mounted) {

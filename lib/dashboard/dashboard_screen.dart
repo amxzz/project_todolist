@@ -9,7 +9,7 @@ class DashboardScreen extends StatefulWidget {
 
   @override
   DashboardScreenState createState() => DashboardScreenState();
-}
+} 
 
 class DashboardScreenState extends State<DashboardScreen> {
   final TaskService _taskService = TaskService();
@@ -17,7 +17,7 @@ class DashboardScreenState extends State<DashboardScreen> {
   bool _isLoading = true;
 
   @override
-  void initState() {
+  void initState() {  
     super.initState();
     fetchTasks();
   }
