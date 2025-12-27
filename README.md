@@ -1,6 +1,6 @@
-# project_todolist
+# project_thrive
 
-A new Flutter project.
+todo app
 
 ## Getting Started
 
